@@ -142,6 +142,45 @@ animation:grow 3s infinite alternate;
 from{transform:scale(1);}
 to{transform:scale(1.4);}
 }
+/* ROYAL SKY STARS */
+.starSky{
+position:absolute;
+width:3px;
+height:3px;
+background:white;
+border-radius:50%;
+animation:twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle{
+from{opacity:0.3;}
+to{opacity:1;}
+}
+
+/* FALLING PETALS */
+.petal{
+position:absolute;
+font-size:18px;
+animation:fall 8s linear infinite;
+pointer-events:none;
+}
+
+@keyframes fall{
+0%{transform:translateY(-10vh) rotate(0deg);}
+100%{transform:translateY(110vh) rotate(360deg);}
+}
+
+/* DESTINY GLOW PULSE */
+.destinyGlow{
+animation:pulseGlow 2s infinite alternate;
+}
+
+@keyframes pulseGlow{
+from{text-shadow:0 0 10px gold,0 0 20px gold;}
+to{text-shadow:0 0 30px #ff99ff,0 0 60px gold;}
+}
+
+  
 </style>
 </head>
 
@@ -173,7 +212,7 @@ to{transform:scale(1.4);}
 
 <!-- GALLERY -->
 <div id="gallery" class="screen">
-<h2>💖 Royal Floating Memories 💖</h2>
+<h2>💖 Some Sweet Memories 💖</h2>
 </div>
 
 <!-- CAKE -->
@@ -196,7 +235,7 @@ to{transform:scale(1.4);}
 
 <!-- GOODBYE -->
 <div id="goodbyeScreen" class="screen">
-<h1>Every Queen Writes Her Own Destiny 👑</h1>
+<h1 class="destinyGlow">Every Queen Writes Her Own Destiny 👑</h1>
 <div id="royalHeart">💖</div>
 <h2>Happy 17th Birthday Princess Aiman ✨</h2>
 <h3 style="opacity:0.7;">— Ansar</h3>
@@ -306,7 +345,63 @@ setTimeout(()=>cinematicGoodbye(),4000);
 
 function cinematicGoodbye(){
 transition("goodbyeScreen");
+
+createRoyalSky();
+createPetals();
+
+setTimeout(()=>{
+finalHeartExplosion();
+},3000);
 }
+
+
+function createRoyalSky(){
+for(let i=0;i<80;i++){
+let star=document.createElement("div");
+star.className="starSky";
+star.style.left=Math.random()*100+"%";
+star.style.top=Math.random()*100+"%";
+star.style.animationDuration=(1+Math.random()*3)+"s";
+document.body.appendChild(star);
+}
+}
+
+function createPetals(){
+for(let i=0;i<25;i++){
+let petal=document.createElement("div");
+petal.className="petal";
+petal.innerHTML="🌸";
+petal.style.left=Math.random()*100+"%";
+petal.style.animationDuration=(6+Math.random()*6)+"s";
+document.body.appendChild(petal);
+}
+}
+
+function finalHeartExplosion(){
+for(let i=0;i<40;i++){
+let heart=document.createElement("div");
+heart.className="glitter";
+heart.style.background=["gold","#ff66cc","#cc99ff","#66ccff","white"][Math.floor(Math.random()*5)];
+heart.style.left="50%";
+heart.style.top="50%";
+heart.style.width="8px";
+heart.style.height="8px";
+heart.style.position="absolute";
+heart.style.transition="all 1s ease-out";
+document.body.appendChild(heart);
+
+let angle=Math.random()*2*Math.PI;
+let distance=100+Math.random()*80;
+
+setTimeout(()=>{
+heart.style.transform=`translate(${Math.cos(angle)*distance}px, ${Math.sin(angle)*distance}px)`;
+heart.style.opacity="0";
+},50);
+
+setTimeout(()=>heart.remove(),1200);
+}
+}
+
 
 function createGlitter(){
 let colors=["gold","#ff66cc","#cc99ff","#66ccff","white"];
@@ -366,6 +461,7 @@ setTimeout(()=>firework.remove(),1200);
 
 </body>
 </html>
+
 
 
 
