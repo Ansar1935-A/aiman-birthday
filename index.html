@@ -3,148 +3,246 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Royal Surprise</title>
+<title>Princess Aiman 👑</title>
 
 <style>
 body{
 margin:0;
 overflow:hidden;
-font-family: 'Segoe UI', sans-serif;
-background:linear-gradient(135deg,#ffe6f2,#fff5e6);
-text-align:center;
-color:#5a007a;
+font-family:'Segoe UI',sans-serif;
+background:radial-gradient(circle at top,#ffd6f6,#e6ccff,#ffcce6);
+color:#4a0072;
+transition:opacity 1.2s ease;
 }
 
+/* SCREENS */
 .screen{
-display:none;
 position:absolute;
 width:100%;
 height:100%;
-justify-content:center;
+top:0;
+left:0;
+display:none;
 align-items:center;
+justify-content:center;
 flex-direction:column;
+text-align:center;
+padding:20px;
+box-sizing:border-box;
 }
 
-.active{
-display:flex;
+h1,h2,h3{
+color:#5a008a;
+text-shadow:0 0 15px #fff,0 0 35px #ff99ff;
 }
 
 button{
-padding:12px 25px;
+padding:14px 32px;
 border:none;
-border-radius:25px;
-background:gold;
-color:#5a007a;
-font-weight:bold;
-font-size:16px;
+border-radius:40px;
+background:linear-gradient(45deg,gold,orange);
+color:white;
+font-size:18px;
 cursor:pointer;
-box-shadow:0 5px 15px rgba(0,0,0,0.2);
+box-shadow:0 0 20px gold;
 }
 
+/* GLITTER */
+.glitter{
+position:absolute;
+width:6px;
+height:6px;
+border-radius:50%;
+animation:floatUp linear infinite;
+opacity:0.8;
+z-index:0;
+}
+
+@keyframes floatUp{
+0%{transform:translateY(100vh);}
+100%{transform:translateY(-10vh);}
+}
+
+/* STAR GAME */
+#star{
+font-size:60px;
+cursor:pointer;
+transition:transform 0.2s;
+}
+#star:active{transform:scale(1.4);}
+
+/* CROWN */
+#crown{
+font-size:90px;
+position:absolute;
+top:-120px;
+animation:drop 2s forwards;
+}
+@keyframes drop{to{top:30%;}}
+
+/* PHOTOS */
 .photo{
 position:absolute;
-width:130px;
 border-radius:20px;
-box-shadow:0 10px 25px rgba(0,0,0,0.3);
-animation:float 10s ease-in-out infinite;
+box-shadow:0 0 25px gold;
+animation:floatPhoto ease-in-out infinite alternate;
 z-index:1;
 pointer-events:none;
 }
 
-@keyframes float{
-0%{transform:translateY(0px);}
-50%{transform:translateY(-20px);}
-100%{transform:translateY(0px);}
+@keyframes floatPhoto{
+0%{transform:translateY(0px) rotate(-3deg);}
+100%{transform:translateY(-35px) rotate(3deg);}
 }
 
-.quote{
-font-size:20px;
-margin:15px;
-opacity:0;
-transition:opacity 1.5s ease;
-z-index:5;
-}
-
+/* BALLOONS */
 .balloon{
 position:absolute;
-font-size:30px;
-animation:rise 8s linear infinite;
+font-size:40px;
+animation:balloonUp linear infinite;
 z-index:0;
 }
-
-@keyframes rise{
-0%{bottom:-50px;}
-100%{bottom:110%;}
+@keyframes balloonUp{
+0%{transform:translateY(100vh);}
+100%{transform:translateY(-10vh);}
 }
 
-h1{
-z-index:5;
+/* CAKE */
+#cake{
+font-size:90px;
+cursor:pointer;
+animation:pulse 1.5s infinite;
+}
+@keyframes pulse{
+0%{transform:scale(1);}
+50%{transform:scale(1.2);}
+100%{transform:scale(1);}
 }
 
+/* QUOTES */
+.quote{
+opacity:0;
+font-size:20px;
+margin-top:20px;
+transition:opacity 2s;
+max-width:90%;
+}
+
+/* GOODBYE */
+#goodbyeScreen{
+background:radial-gradient(circle,#2b004f,#4b0082,#000);
+color:white;
+}
+
+#royalHeart{
+font-size:90px;
+animation:grow 3s infinite alternate;
+}
+@keyframes grow{
+from{transform:scale(1);}
+to{transform:scale(1.4);}
+}
 </style>
 </head>
+
 <body>
 
-<audio id="birthdayMusic" src="birthday.mp3"></audio>
-<audio id="perfectMusic" src="perfect.mp3"></audio>
+<!-- ONLY BIRTHDAY MUSIC NOW -->
+<audio id="birthdayMusic" loop>
+<source src="birthday.mp3" type="audio/mpeg">
+</audio>
 
-<!-- Start Screen -->
-<div id="startScreen" class="screen active">
+<!-- START -->
+<div id="start" class="screen" style="display:flex;">
 <h1>👑 Tap To Begin The Royal Fairytale ✨</h1>
-<button onclick="startMagic()">Start</button>
+<button onclick="start()">Start</button>
 </div>
 
-<!-- Welcome -->
-<div id="welcomeScreen" class="screen">
-<h1>Happy Birthday Aiman 🎂✨</h1>
-<button onclick="showGallery()">Continue</button>
+<!-- WELCOME -->
+<div id="welcome" class="screen">
+<h1>✨ A Princess Named Aiman Turns 17 👑</h1>
+<button onclick="showGame()">Continue</button>
 </div>
 
-<!-- Gallery -->
+<!-- GAME -->
+<div id="game" class="screen">
+<h2>Catch 5 Magical Stars ⭐</h2>
+<div id="star">⭐</div>
+<h3 id="score">0 / 5</h3>
+</div>
+
+<!-- GALLERY -->
 <div id="gallery" class="screen">
-<h1>Beautiful Memories 💖</h1>
+<h2>💖 Royal Floating Memories 💖</h2>
 </div>
 
-<!-- Quotes -->
-<div id="quotesScreen" class="screen">
+<!-- CAKE -->
+<div id="cakeScreen" class="screen">
+<h2>🎂 Make A Royal Wish 👑</h2>
+<div id="cake" onclick="cutCake()">🎂</div>
+</div>
+
+<!-- QUOTES -->
+<div id="quotes" class="screen">
 <div class="quote">You don’t even try to shine… yet you outshine everyone ✨</div>
+<div class="quote">Some people are rare. You are one of them.</div>
+<div class="quote">Your smile carries a kind of magic 💫</div>
 <div class="quote">Strong mind. Soft heart. Golden soul.</div>
 <div class="quote">The world feels brighter when you’re in it 🌸</div>
+<div class="quote">You’re not just growing older… you’re growing stronger.</div>
 <div class="quote">Grace isn’t taught. You naturally have it 👑</div>
 <div class="quote">Keep being you. That’s your superpower.</div>
 </div>
 
-<!-- Goodbye -->
+<!-- GOODBYE -->
 <div id="goodbyeScreen" class="screen">
-<h1>✨ Stay Blessed Always ✨</h1>
-<h2 style="margin-top:20px;">— Ansar</h2>
+<h1>Every Queen Writes Her Own Destiny 👑</h1>
+<div id="royalHeart">💖</div>
+<h2>Happy 17th Birthday Princess Aiman ✨</h2>
+<h3 style="opacity:0.7;">— Ansar</h3>
 </div>
 
 <script>
+let score=0;
 
-function transition(id){
-document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
-document.getElementById(id).classList.add("active");
+function transition(next){
+document.body.style.opacity=0;
+setTimeout(()=>{
+document.querySelectorAll(".screen").forEach(s=>s.style.display="none");
+document.getElementById(next).style.display="flex";
+document.body.style.opacity=1;
+},700);
 }
 
-function startMagic(){
-
-let music = document.getElementById("birthdayMusic");
-
-if(music){
-music.currentTime = 0;
-music.volume = 0.8;
-
+function start(){
+let music=document.getElementById("birthdayMusic");
+music.volume=0;
 music.play().then(()=>{
-console.log("Birthday music playing");
-}).catch((error)=>{
-console.log("Audio blocked:", error);
+let fade=setInterval(()=>{
+if(music.volume<1){
+music.volume+=0.05;
+}else{
+clearInterval(fade);
+}
+},200);
 });
+createGlitter();
+transition("welcome");
 }
 
-transition("welcomeScreen");
-}
+function showGame(){transition("game");}
 
+document.getElementById("star").onclick=function(){
+score++;
+document.getElementById("score").innerText=score+" / 5";
+if(score==5){
+let crown=document.createElement("div");
+crown.id="crown";
+crown.innerHTML="👑";
+document.body.appendChild(crown);
+setTimeout(()=>showGallery(),2000);
+}
+}
 
 function showGallery(){
 transition("gallery");
@@ -152,11 +250,11 @@ transition("gallery");
 let photos=["photo1.jpg","photo2.jpg","photo3.jpg","photo4.jpg","photo5.jpg"];
 
 let positions=[
-{top:"8%",left:"5%"},
-{top:"15%",left:"75%"},
-{top:"65%",left:"8%"},
-{top:"70%",left:"70%"},
-{top:"40%",left:"85%"}
+{top:"10%",left:"8%",size:"120px",speed:"8s"},
+{top:"15%",left:"65%",size:"140px",speed:"10s"},
+{top:"60%",left:"12%",size:"130px",speed:"9s"},
+{top:"65%",left:"70%",size:"150px",speed:"11s"},
+{top:"80%",left:"40%",size:"140px",speed:"10s"}  // moved photo5 to bottom center
 ];
 
 photos.forEach((src,index)=>{
@@ -165,19 +263,17 @@ img.src=src;
 img.className="photo";
 img.style.top=positions[index].top;
 img.style.left=positions[index].left;
-img.style.animationDuration=(8+index*2)+"s";
+img.style.width=positions[index].size;
+img.style.animationDuration=positions[index].speed;
 document.body.appendChild(img);
 });
 
 createBalloons();
-
-setTimeout(()=>{
-showQuotes();
-},8000);
+setTimeout(()=>transition("cakeScreen"),10000);
 }
 
 function createBalloons(){
-let balloonPositions=["10%","30%","50%","70%","90%"];
+let balloonPositions=["5%","25%","45%","65%","85%"];
 balloonPositions.forEach((pos,i)=>{
 let b=document.createElement("div");
 b.className="balloon";
@@ -188,31 +284,54 @@ document.body.appendChild(b);
 });
 }
 
-function showQuotes(){
-transition("quotesScreen");
-
-let birthday=document.getElementById("birthdayMusic");
-birthday.pause();
-
-let perfect=document.getElementById("perfectMusic");
-perfect.volume=0.7;
-perfect.play();
-
-let quotes=document.querySelectorAll(".quote");
-
-quotes.forEach((q,index)=>{
-setTimeout(()=>{
-q.style.opacity=1;
-},index*2500);
-});
-
-setTimeout(()=>{
-transition("goodbyeScreen");
-},quotes.length*2500+3000);
+function cutCake(){
+createFireworks();
+setTimeout(()=>showQuotes(),4000);
 }
 
+function showQuotes(){
+transition("quotes");
+let quotes=document.querySelectorAll(".quote");
+let i=0;
+let interval=setInterval(()=>{
+if(i<quotes.length){
+quotes[i].style.opacity=1;
+i++;
+}else{
+clearInterval(interval);
+setTimeout(()=>cinematicGoodbye(),4000);
+}
+},2500);
+}
+
+function cinematicGoodbye(){
+transition("goodbyeScreen");
+}
+
+function createGlitter(){
+let colors=["gold","#ff66cc","#cc99ff","#66ccff","white"];
+for(let i=0;i<90;i++){
+let g=document.createElement("div");
+g.className="glitter";
+g.style.background=colors[Math.floor(Math.random()*colors.length)];
+g.style.left=Math.random()*100+"%";
+g.style.animationDuration=(4+Math.random()*6)+"s";
+document.body.appendChild(g);
+}
+}
+
+function createFireworks(){
+let colors=["gold","#ff66cc","#cc99ff","#66ccff"];
+for(let i=0;i<60;i++){
+let f=document.createElement("div");
+f.className="glitter";
+f.style.background=colors[Math.floor(Math.random()*colors.length)];
+f.style.left=Math.random()*100+"%";
+f.style.top=Math.random()*100+"%";
+document.body.appendChild(f);
+}
+}
 </script>
 
 </body>
 </html>
-
