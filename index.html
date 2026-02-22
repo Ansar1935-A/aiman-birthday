@@ -180,6 +180,21 @@ from{text-shadow:0 0 10px gold,0 0 20px gold;}
 to{text-shadow:0 0 30px #ff99ff,0 0 60px gold;}
 }
 
+#signature{
+font-size:22px;
+color:#ffd700;
+text-shadow:
+0 0 10px gold,
+0 0 25px #ff99ff,
+0 0 40px white;
+animation:signatureGlow 2s infinite alternate;
+}
+
+@keyframes signatureGlow{
+from{transform:scale(1);}
+to{transform:scale(1.08);}
+}
+
   
 </style>
 </head>
@@ -238,7 +253,8 @@ to{text-shadow:0 0 30px #ff99ff,0 0 60px gold;}
 <h1 class="destinyGlow">Every Queen Writes Her Own Destiny 👑</h1>
 <div id="royalHeart">💖</div>
 <h2>Happy 17th Birthday Princess Aiman ✨</h2>
-<h3 style="opacity:1.1;">— Ansar</h3>
+<h3 id="signature">— Ansar</h3>
+
 </div>
 
 <script>
@@ -344,14 +360,16 @@ setTimeout(()=>cinematicGoodbye(),4000);
 }
 
 function cinematicGoodbye(){
-transition("goodbyeScreen");
+   transition("goodbyeScreen");
 
-createRoyalSky();
-createPetals();
+   setTimeout(()=>{
+      transition("finalMessage");
+      enableFinalMagic();
+   },7000);
+}
 
-setTimeout(()=>{
-finalHeartExplosion();
-},3000);
+function enableFinalMagic(){
+   ...
 }
 
 
@@ -455,12 +473,42 @@ particle.style.opacity="0";
 setTimeout(()=>firework.remove(),1200);
 
 },i*400);
+  
 }
 }
+  function enableFinalMagic(){
+let screen=document.getElementById("finalMessage");
+
+screen.addEventListener("mousemove", function(e){
+let sparkle=document.createElement("div");
+sparkle.style.position="absolute";
+sparkle.style.left=e.clientX+"px";
+sparkle.style.top=e.clientY+"px";
+sparkle.style.width="5px";
+sparkle.style.height="5px";
+sparkle.style.background="gold";
+sparkle.style.borderRadius="50%";
+sparkle.style.pointerEvents="none";
+sparkle.style.opacity="1";
+sparkle.style.transition="all 0.8s ease-out";
+document.body.appendChild(sparkle);
+
+setTimeout(()=>{
+sparkle.style.transform="scale(3)";
+sparkle.style.opacity="0";
+},10);
+
+setTimeout(()=>{
+sparkle.remove();
+},800);
+});
+}
+
 </script>
 
 </body>
 </html>
+
 
 
 
