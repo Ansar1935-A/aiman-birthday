@@ -128,11 +128,23 @@ document.getElementById(id).classList.add("active");
 }
 
 function startMagic(){
-let music=document.getElementById("birthdayMusic");
-music.volume=0.8;
-music.play();
+
+let music = document.getElementById("birthdayMusic");
+
+if(music){
+music.currentTime = 0;
+music.volume = 0.8;
+
+music.play().then(()=>{
+console.log("Birthday music playing");
+}).catch((error)=>{
+console.log("Audio blocked:", error);
+});
+}
+
 transition("welcomeScreen");
 }
+
 
 function showGallery(){
 transition("gallery");
@@ -203,3 +215,4 @@ transition("goodbyeScreen");
 
 </body>
 </html>
+
