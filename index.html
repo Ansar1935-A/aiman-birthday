@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Princess Aiman 👑</title>
+<title>HAPPY BIRTHDAY AIMAN🥳🎉🌸</title>
 
 <style>
 body{
@@ -251,7 +251,7 @@ let photos=["photo1.jpg","photo2.jpg","photo3.jpg","photo4.jpg","photo5.jpg"];
 
 let positions=[
 {top:"10%",left:"8%",size:"120px",speed:"8s"},
-{top:"15%",left:"65%",size:"140px",speed:"10s"},
+{top:"15%",left:"78%",size:"140px",speed:"10s"},
 {top:"60%",left:"12%",size:"130px",speed:"9s"},
 {top:"65%",left:"70%",size:"150px",speed:"11s"},
 {top:"80%",left:"40%",size:"140px",speed:"10s"}  // moved photo5 to bottom center
@@ -321,17 +321,51 @@ document.body.appendChild(g);
 }
 
 function createFireworks(){
-let colors=["gold","#ff66cc","#cc99ff","#66ccff"];
-for(let i=0;i<60;i++){
-let f=document.createElement("div");
-f.className="glitter";
-f.style.background=colors[Math.floor(Math.random()*colors.length)];
-f.style.left=Math.random()*100+"%";
-f.style.top=Math.random()*100+"%";
-document.body.appendChild(f);
+
+for(let i=0;i<8;i++){
+
+setTimeout(()=>{
+
+let firework=document.createElement("div");
+firework.style.position="absolute";
+firework.style.left=Math.random()*100+"%";
+firework.style.top=Math.random()*60+"%";
+firework.style.pointerEvents="none";
+document.body.appendChild(firework);
+
+for(let j=0;j<25;j++){
+
+let particle=document.createElement("div");
+particle.style.position="absolute";
+particle.style.width="6px";
+particle.style.height="6px";
+particle.style.borderRadius="50%";
+particle.style.background=["gold","#ff66cc","#cc99ff","#66ccff","white"][Math.floor(Math.random()*5)];
+particle.style.left="0px";
+particle.style.top="0px";
+particle.style.transition="all 1s ease-out";
+
+firework.appendChild(particle);
+
+let angle=Math.random()*2*Math.PI;
+let distance=80+Math.random()*60;
+
+setTimeout(()=>{
+particle.style.transform=`translate(${Math.cos(angle)*distance}px, ${Math.sin(angle)*distance}px)`;
+particle.style.opacity="0";
+},10);
+
 }
+
+setTimeout(()=>firework.remove(),1200);
+
+},i*400);
+}
+}
+
 }
 </script>
 
 </body>
 </html>
+
