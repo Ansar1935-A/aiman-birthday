@@ -7,117 +7,87 @@
 
 <style>
 
+*{
+box-sizing:border-box;
+}
+
 body{
 margin:0;
 overflow:hidden;
 background:radial-gradient(circle at center,#1a0033,#000);
-font-family:'Segoe UI',sans-serif;
+font-family:Segoe UI, sans-serif;
 color:white;
 text-align:center;
 }
 
+/* SCREENS */
 .screen{
 position:absolute;
 width:100%;
 height:100%;
+top:0;
+left:0;
 display:none;
 justify-content:center;
 align-items:center;
 flex-direction:column;
+z-index:5;
+padding:20px;
 }
 
 .active{
 display:flex;
-animation:fadeIn 1.5s ease forwards;
+animation:fadeIn 1s ease forwards;
 }
 
 @keyframes fadeIn{
-from{opacity:0;}
-to{opacity:1;}
+from{opacity:0}
+to{opacity:1}
 }
 
-/* PALACE BACKGROUND */
+/* PALACE */
 .palace{
 position:fixed;
 bottom:0;
 width:100%;
 height:40%;
 background:linear-gradient(to top,#000,transparent),
-url('https://i.imgur.com/6Iej2c3.png');
-background-size:cover;
-background-position:center;
-opacity:0.3;
+radial-gradient(circle at center,#330066,#000);
+opacity:0.4;
 z-index:0;
 }
 
 /* FLOATING PHOTOS */
 .floating-photo{
 position:fixed;
-width:160px;
+width:150px;
 border-radius:20px;
-box-shadow:0 0 25px gold;
-animation:floatPhoto 6s ease-in-out infinite;
-z-index:2;
+box-shadow:0 0 20px gold;
+animation:float 6s ease-in-out infinite;
+z-index:1;
+opacity:0.9;
 }
 
-@keyframes floatPhoto{
-0%,100%{transform:translateY(0px);}
-50%{transform:translateY(-25px);}
+@keyframes float{
+0%,100%{transform:translateY(0)}
+50%{transform:translateY(-20px)}
 }
 
 /* BALLOONS */
 .balloon{
 position:fixed;
-bottom:-100px;
-width:40px;
-height:60px;
-background:radial-gradient(circle at 30% 30%, #ff66cc, #cc00ff);
+bottom:-80px;
+width:35px;
+height:50px;
+background:radial-gradient(circle at 30% 30%,#ff66cc,#cc00ff);
 border-radius:50%;
 animation:rise linear infinite;
-z-index:1;
+z-index:0;
 }
 
 @keyframes rise{
-0%{transform:translateY(0);}
-100%{transform:translateY(-120vh);}
-}
-
-/* CONFETTI */
-.confetti{
-position:fixed;
-width:8px;
-height:8px;
-border-radius:50%;
-animation:fall 3s linear forwards;
-}
-
-@keyframes fall{
-to{transform:translateY(100vh);opacity:0;}
-}
-
-/* CORONATION TEXT */
-.coronation-text{
-font-size:45px;
-color:gold;
-text-shadow:0 0 20px gold,0 0 40px orange;
-animation:glowPulse 2s infinite;
-}
-
-@keyframes glowPulse{
-0%,100%{text-shadow:0 0 20px gold;}
-50%{text-shadow:0 0 50px orange,0 0 100px gold;}
-}
-
-/* CROWN DROP */
-.crown{
-position:absolute;
-top:-100px;
-font-size:60px;
-animation:drop 2s forwards;
-}
-
-@keyframes drop{
-to{top:20px;}
+0%{transform:translateY(0)}
+100%{transform:translateY(-120vh)}
 }
 
 /* BUTTON */
@@ -129,6 +99,36 @@ background:gold;
 color:black;
 font-weight:bold;
 cursor:pointer;
+margin-top:15px;
+}
+
+/* CORONATION */
+.coronation{
+font-size:42px;
+color:gold;
+text-shadow:0 0 15px gold,0 0 30px orange;
+animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+0%,100%{text-shadow:0 0 15px gold}
+50%{text-shadow:0 0 40px orange,0 0 80px gold}
+}
+
+/* FIREWORK PARTICLE */
+.spark{
+position:fixed;
+width:6px;
+height:6px;
+border-radius:50%;
+animation:explode 1.2s linear forwards;
+}
+
+@keyframes explode{
+to{
+transform:translate(var(--x),var(--y));
+opacity:0;
+}
 }
 
 </style>
@@ -138,42 +138,56 @@ cursor:pointer;
 
 <div class="palace"></div>
 
-<!-- START SCREEN -->
-<div id="startScreen" class="screen active">
+<!-- START -->
+<div id="start" class="screen active">
 <h1>Tap To Start The Magic ✨</h1>
 <button onclick="startExperience()">Start</button>
 </div>
 
 <!-- QUOTES -->
-<div id="quoteScreen" class="screen">
+<div id="quotes" class="screen">
 <h1 id="quoteText"></h1>
 </div>
 
 <!-- GAME -->
-<div id="gameScreen" class="screen">
+<div id="game" class="screen">
 <h1>Catch 10 Hearts ❤️</h1>
-<p>Tap them fast!</p>
 <div id="score">0</div>
 </div>
 
 <!-- WISH -->
-<div id="wishScreen" class="screen">
-<h1>Close Your Eyes… ✨</h1>
+<div id="wish" class="screen">
+<h1>Close Your Eyes…</h1>
 <h2>Make A Wish 💫</h2>
 <button onclick="blowCandle()">Blow Candle 🕯</button>
 </div>
 
 <!-- FINAL -->
-<div id="finalScreen" class="screen">
-<div class="crown">👑</div>
-<h1 class="coronation-text">Queen Of My Heart</h1>
+<div id="final" class="screen">
+<h1 class="coronation">Queen Of My Heart 👑</h1>
 <h2>Forever & Always 💖</h2>
 </div>
 
-<audio id="bgMusic" src="perfect.mp3"></audio>
+<audio id="music" src="perfect.mp3"></audio>
 
 <script>
 
+/* SCREEN CONTROL */
+function show(id){
+document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+}
+
+/* START */
+function startExperience(){
+document.getElementById("music").play().catch(()=>{});
+createPhotos();
+createBalloons();
+show("quotes");
+showQuotes();
+}
+
+/* QUOTES */
 const quotes=[
 "You are my destiny ❤️",
 "You are my happiest moment ✨",
@@ -182,25 +196,12 @@ const quotes=[
 "My Queen 👑"
 ];
 
-let quoteIndex=0;
-
-function startExperience(){
-document.getElementById("bgMusic").play();
-createFloatingPhotos();
-createBalloons();
-showScreen("quoteScreen");
-showQuotes();
-}
-
-function showScreen(id){
-document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
-document.getElementById(id).classList.add("active");
-}
+let q=0;
 
 function showQuotes(){
-if(quoteIndex<quotes.length){
-document.getElementById("quoteText").innerText=quotes[quoteIndex];
-quoteIndex++;
+if(q<quotes.length){
+document.getElementById("quoteText").innerText=quotes[q];
+q++;
 setTimeout(showQuotes,3000);
 }else{
 startGame();
@@ -209,66 +210,88 @@ startGame();
 
 /* GAME */
 let score=0;
+let gameActive=true;
 
 function startGame(){
-showScreen("gameScreen");
+show("game");
+score=0;
+document.getElementById("score").innerText=score;
+gameActive=true;
 spawnHeart();
 }
 
 function spawnHeart(){
+if(!gameActive) return;
+
 let heart=document.createElement("div");
 heart.innerHTML="❤️";
 heart.style.position="fixed";
-heart.style.left=Math.random()*90+"%";
-heart.style.top=Math.random()*90+"%";
+heart.style.left=Math.random()*80+"%";
+heart.style.top=Math.random()*80+"%";
 heart.style.fontSize="30px";
 heart.style.cursor="pointer";
+heart.style.zIndex="10";
 
 heart.onclick=function(){
 score++;
 document.getElementById("score").innerText=score;
 heart.remove();
 if(score>=10){
-showWish();
+gameActive=false;
+show("wish");
 }else{
 spawnHeart();
 }
 };
 
 document.body.appendChild(heart);
-setTimeout(()=>heart.remove(),2000);
+
+setTimeout(()=>{
+if(document.body.contains(heart)) heart.remove();
+},2000);
 }
 
-function showWish(){
-showScreen("wishScreen");
-}
-
+/* WISH */
 function blowCandle(){
 royalCelebration();
 }
 
 /* FINAL */
 function royalCelebration(){
-showScreen("finalScreen");
+show("final");
 bollywoodFireworks();
 }
 
+/* FIREWORKS */
 function bollywoodFireworks(){
-for(let i=0;i<400;i++){
-let confetti=document.createElement("div");
-confetti.className="confetti";
-confetti.style.left=Math.random()*100+"%";
-confetti.style.background=["gold","#ffcc00","#ff0066","#66ccff","#ffffff"][Math.floor(Math.random()*5)];
-document.body.appendChild(confetti);
+
+for(let i=0;i<200;i++){
+let spark=document.createElement("div");
+spark.className="spark";
+spark.style.background=["gold","#ffcc00","#ff0066","#66ccff","#ffffff"][Math.floor(Math.random()*5)];
+
+let angle=Math.random()*2*Math.PI;
+let distance=150+Math.random()*200;
+
+spark.style.left="50%";
+spark.style.top="50%";
+spark.style.setProperty('--x',Math.cos(angle)*distance+"px");
+spark.style.setProperty('--y',Math.sin(angle)*distance+"px");
+
+document.body.appendChild(spark);
+
+setTimeout(()=>spark.remove(),1200);
 }
+
 }
 
 /* PHOTOS */
-function createFloatingPhotos(){
+function createPhotos(){
+
 const photos=["photo1.jpg","photo2.jpg","photo3.jpg","photo4.jpg","photo5.jpg"];
 const positions=[
 {top:"10%",left:"5%"},
-{top:"20%",right:"5%"},
+{top:"15%",right:"5%"},
 {top:"65%",left:"8%"},
 {top:"70%",right:"8%"},
 {top:"40%",left:"3%"}
@@ -287,7 +310,7 @@ document.body.appendChild(img);
 
 /* BALLOONS */
 function createBalloons(){
-for(let i=0;i<50;i++){
+for(let i=0;i<40;i++){
 let balloon=document.createElement("div");
 balloon.className="balloon";
 balloon.style.left=Math.random()*100+"%";
