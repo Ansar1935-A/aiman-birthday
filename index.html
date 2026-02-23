@@ -15,7 +15,7 @@ color:#4a0072;
 transition:opacity 1.2s ease;
 }
 
-/* SCREENS */
+/* Screens */
 .screen{
 position:absolute;
 width:100%;
@@ -31,6 +31,7 @@ padding:20px;
 box-sizing:border-box;
 }
 
+/* Headings */
 h1,h2,h3{
 color:#5a008a;
 text-shadow:0 0 15px #fff,0 0 35px #ff99ff;
@@ -47,7 +48,7 @@ cursor:pointer;
 box-shadow:0 0 20px gold;
 }
 
-/* GLITTER */
+/* Glitter */
 .glitter{
 position:absolute;
 width:6px;
@@ -63,7 +64,7 @@ z-index:0;
 100%{transform:translateY(-10vh);}
 }
 
-/* STAR GAME */
+/* Star game */
 #star{
 font-size:60px;
 cursor:pointer;
@@ -71,7 +72,7 @@ transition:transform 0.2s;
 }
 #star:active{transform:scale(1.4);}
 
-/* CROWN */
+/* Crown */
 #crown{
 font-size:90px;
 position:absolute;
@@ -80,46 +81,7 @@ animation:drop 2s forwards;
 }
 @keyframes drop{to{top:30%;}}
 
-/* PHOTOS */
-.photo{
-position:absolute;
-border-radius:20px;
-box-shadow:0 0 25px gold;
-animation:floatPhoto ease-in-out infinite alternate;
-z-index:1;
-pointer-events:none;
-}
-
-@keyframes floatPhoto{
-0%{transform:translateY(0px) rotate(-3deg);}
-100%{transform:translateY(-35px) rotate(3deg);}
-}
-
-/* BALLOONS */
-.balloon{
-position:absolute;
-font-size:40px;
-animation:balloonUp linear infinite;
-z-index:0;
-}
-@keyframes balloonUp{
-0%{transform:translateY(100vh);}
-100%{transform:translateY(-10vh);}
-}
-
-/* CAKE */
-#cake{
-font-size:90px;
-cursor:pointer;
-animation:pulse 1.5s infinite;
-}
-@keyframes pulse{
-0%{transform:scale(1);}
-50%{transform:scale(1.2);}
-100%{transform:scale(1);}
-}
-
-/* QUOTES */
+/* Quotes */
 .quote{
 opacity:0;
 font-size:20px;
@@ -128,71 +90,10 @@ transition:opacity 2s;
 max-width:90%;
 }
 
-/* GOODBYE */
-#goodbyeScreen{
-background:radial-gradient(circle,#2b004f,#4b0082,#000);
+/* FINAL CELEBRATION */
+#finalCelebration{
+background:radial-gradient(circle,#1a0033,#330066,#000);
 color:white;
-}
-
-#royalHeart{
-font-size:90px;
-animation:grow 3s infinite alternate;
-}
-@keyframes grow{
-from{transform:scale(1);}
-to{transform:scale(1.4);}
-}
-/* ROYAL SKY STARS */
-.starSky{
-position:absolute;
-width:3px;
-height:3px;
-background:white;
-border-radius:50%;
-animation:twinkle 2s infinite alternate;
-}
-
-@keyframes twinkle{
-from{opacity:0.3;}
-to{opacity:1;}
-}
-
-/* FALLING PETALS */
-.petal{
-position:absolute;
-font-size:18px;
-animation:fall 8s linear infinite;
-pointer-events:none;
-}
-
-@keyframes fall{
-0%{transform:translateY(-10vh) rotate(0deg);}
-100%{transform:translateY(110vh) rotate(360deg);}
-}
-
-/* DESTINY GLOW PULSE */
-.destinyGlow{
-animation:pulseGlow 2s infinite alternate;
-}
-
-@keyframes pulseGlow{
-from{text-shadow:0 0 10px gold,0 0 20px gold;}
-to{text-shadow:0 0 30px #ff99ff,0 0 60px gold;}
-}
-
-#signature{
-font-size:22px;
-color:#ffd700;
-text-shadow:
-0 0 10px gold,
-0 0 25px #ff99ff,
-0 0 40px white;
-animation:signatureGlow 2s infinite alternate;
-}
-
-@keyframes signatureGlow{
-from{transform:scale(1);}
-to{transform:scale(1.08);}
 }
 
 #queenText{
@@ -210,11 +111,25 @@ from{transform:scale(1);}
 to{transform:scale(1.1);}
 }
 
+#signature{
+font-size:22px;
+color:#ffd700;
+text-shadow:
+0 0 10px gold,
+0 0 25px #ff99ff,
+0 0 40px white;
+animation:signatureGlow 2s infinite alternate;
+}
+
+@keyframes signatureGlow{
+from{transform:scale(1);}
+to{transform:scale(1.08);}
+}
+
 .confetti{
 position:absolute;
 width:8px;
 height:12px;
-background:gold;
 animation:confettiFall linear forwards;
 }
 
@@ -222,41 +137,11 @@ animation:confettiFall linear forwards;
 0%{transform:translateY(-10vh) rotate(0deg);}
 100%{transform:translateY(110vh) rotate(720deg);}
 }
-
-function royalCelebration(){
-
-transition("finalCelebration");
-
-let music=document.getElementById("birthdayMusic");
-music.volume=1;
-
-for(let i=0;i<150;i++){
-let confetti=document.createElement("div");
-confetti.className="confetti";
-confetti.style.left=Math.random()*100+"%";
-confetti.style.background=["gold","#ff66cc","#cc99ff","#66ccff","white"][Math.floor(Math.random()*5)];
-confetti.style.animationDuration=(3+Math.random()*4)+"s";
-document.body.appendChild(confetti);
-}
-
-let interval=setInterval(()=>{
-createFireworks();
-},1500);
-
-setTimeout(()=>{
-clearInterval(interval);
-},8000);
-
-}
-
-
-  
 </style>
 </head>
 
 <body>
 
-<!-- ONLY BIRTHDAY MUSIC NOW -->
 <audio id="birthdayMusic" loop>
 <source src="birthday.mp3" type="audio/mpeg">
 </audio>
@@ -280,17 +165,6 @@ clearInterval(interval);
 <h3 id="score">0 / 5</h3>
 </div>
 
-<!-- GALLERY -->
-<div id="gallery" class="screen">
-<h2>💖 Some Sweet Memories 💖</h2>
-</div>
-
-<!-- CAKE -->
-<div id="cakeScreen" class="screen">
-<h2>🎂 Make A Royal Wish 👑</h2>
-<div id="cake" onclick="cutCake()">🎂</div>
-</div>
-
 <!-- QUOTES -->
 <div id="quotes" class="screen">
 <div class="quote">You don’t even try to shine… yet you outshine everyone ✨</div>
@@ -303,8 +177,8 @@ clearInterval(interval);
 <div class="quote">Keep being you. That’s your superpower.</div>
 </div>
 
-<!-- GOODBYE -->
-<div id="finalCelebration" class="screen" style="background:radial-gradient(circle,#1a0033,#330066,#000);">
+<!-- FINAL -->
+<div id="finalCelebration" class="screen">
 <h1 id="queenText">👑 LONG LIVE THE QUEEN 👑</h1>
 <h2 style="margin-top:20px;">Happy 17th Birthday Aiman ✨</h2>
 <h3 id="signature" style="margin-top:30px;">— Ansar</h3>
@@ -324,17 +198,7 @@ document.body.style.opacity=1;
 
 function start(){
 let music=document.getElementById("birthdayMusic");
-music.volume=0;
-music.play().then(()=>{
-let fade=setInterval(()=>{
-if(music.volume<1){
-music.volume+=0.05;
-}else{
-clearInterval(fade);
-}
-},200);
-});
-createGlitter();
+music.play();
 transition("welcome");
 }
 
@@ -344,57 +208,8 @@ document.getElementById("star").onclick=function(){
 score++;
 document.getElementById("score").innerText=score+" / 5";
 if(score==5){
-let crown=document.createElement("div");
-crown.id="crown";
-crown.innerHTML="👑";
-document.body.appendChild(crown);
-setTimeout(()=>showGallery(),2000);
+setTimeout(()=>showQuotes(),1500);
 }
-}
-
-function showGallery(){
-transition("gallery");
-
-let photos=["photo1.jpg","photo2.jpg","photo3.jpg","photo4.jpg","photo5.jpg"];
-
-let positions=[
-{top:"10%",left:"8%",size:"120px",speed:"8s"},
-{top:"15%",left:"78%",size:"140px",speed:"10s"},
-{top:"60%",left:"12%",size:"130px",speed:"9s"},
-{top:"65%",left:"70%",size:"150px",speed:"11s"},
-{top:"80%",left:"40%",size:"140px",speed:"10s"}  // moved photo5 to bottom center
-];
-
-photos.forEach((src,index)=>{
-let img=document.createElement("img");
-img.src=src;
-img.className="photo";
-img.style.top=positions[index].top;
-img.style.left=positions[index].left;
-img.style.width=positions[index].size;
-img.style.animationDuration=positions[index].speed;
-document.body.appendChild(img);
-});
-
-createBalloons();
-setTimeout(()=>transition("cakeScreen"),10000);
-}
-
-function createBalloons(){
-let balloonPositions=["5%","25%","45%","65%","85%"];
-balloonPositions.forEach((pos,i)=>{
-let b=document.createElement("div");
-b.className="balloon";
-b.innerHTML="🎈";
-b.style.left=pos;
-b.style.animationDuration=(6+i*1.5)+"s";
-document.body.appendChild(b);
-});
-}
-
-function cutCake(){
-createFireworks();
-setTimeout(()=>showQuotes(),4000);
 }
 
 function showQuotes(){
@@ -407,147 +222,47 @@ quotes[i].style.opacity=1;
 i++;
 }else{
 clearInterval(interval);
-setTimeout(()=>cinematicGoodbye(),4000);
+setTimeout(()=>royalCelebration(),4000);
 }
-},2500);
+},2000);
 }
 
-function cinematicGoodbye(){
+function royalCelebration(){
 
-transition("goodbyeScreen");
+transition("finalCelebration");
 
-createRoyalSky();
-createPetals();
+enableSparkle();
+
+for(let i=0;i<200;i++){
+let confetti=document.createElement("div");
+confetti.className="confetti";
+confetti.style.left=Math.random()*100+"%";
+confetti.style.background=["gold","#ff66cc","#cc99ff","#66ccff","white"][Math.floor(Math.random()*5)];
+confetti.style.animationDuration=(3+Math.random()*4)+"s";
+document.body.appendChild(confetti);
+}
+
+let interval=setInterval(()=>{
+createFireworks();
+},1200);
 
 setTimeout(()=>{
-royalCelebration();
-},6000);
+clearInterval(interval);
+},10000);
 
 }
 
-
-function enableFinalMagic(){
-   
-}
-
-
-function createRoyalSky(){
-for(let i=0;i<80;i++){
-let star=document.createElement("div");
-star.className="starSky";
-star.style.left=Math.random()*100+"%";
-star.style.top=Math.random()*100+"%";
-star.style.animationDuration=(1+Math.random()*3)+"s";
-document.body.appendChild(star);
-}
-}
-
-function createPetals(){
-for(let i=0;i<25;i++){
-let petal=document.createElement("div");
-petal.className="petal";
-petal.innerHTML="🌸";
-petal.style.left=Math.random()*100+"%";
-petal.style.animationDuration=(6+Math.random()*6)+"s";
-document.body.appendChild(petal);
-}
-}
-
-function finalHeartExplosion(){
-for(let i=0;i<40;i++){
-let heart=document.createElement("div");
-heart.className="glitter";
-heart.style.background=["gold","#ff66cc","#cc99ff","#66ccff","white"][Math.floor(Math.random()*5)];
-heart.style.left="50%";
-heart.style.top="50%";
-heart.style.width="8px";
-heart.style.height="8px";
-heart.style.position="absolute";
-heart.style.transition="all 1s ease-out";
-document.body.appendChild(heart);
-
-let angle=Math.random()*2*Math.PI;
-let distance=100+Math.random()*80;
-
-setTimeout(()=>{
-heart.style.transform=`translate(${Math.cos(angle)*distance}px, ${Math.sin(angle)*distance}px)`;
-heart.style.opacity="0";
-},50);
-
-setTimeout(()=>heart.remove(),1200);
-}
-}
-
-
-function createGlitter(){
-let colors=["gold","#ff66cc","#cc99ff","#66ccff","white"];
-for(let i=0;i<90;i++){
-let g=document.createElement("div");
-g.className="glitter";
-g.style.background=colors[Math.floor(Math.random()*colors.length)];
-g.style.left=Math.random()*100+"%";
-g.style.animationDuration=(4+Math.random()*6)+"s";
-document.body.appendChild(g);
-}
-}
-
-function createFireworks(){
-
-for(let i=0;i<8;i++){
-
-setTimeout(()=>{
-
-let firework=document.createElement("div");
-firework.style.position="absolute";
-firework.style.left=Math.random()*100+"%";
-firework.style.top=Math.random()*60+"%";
-firework.style.pointerEvents="none";
-document.body.appendChild(firework);
-
-for(let j=0;j<25;j++){
-
-let particle=document.createElement("div");
-particle.style.position="absolute";
-particle.style.width="6px";
-particle.style.height="6px";
-particle.style.borderRadius="50%";
-particle.style.background=["gold","#ff66cc","#cc99ff","#66ccff","white"][Math.floor(Math.random()*5)];
-particle.style.left="0px";
-particle.style.top="0px";
-particle.style.transition="all 1s ease-out";
-
-firework.appendChild(particle);
-
-let angle=Math.random()*2*Math.PI;
-let distance=80+Math.random()*60;
-
-setTimeout(()=>{
-particle.style.transform=`translate(${Math.cos(angle)*distance}px, ${Math.sin(angle)*distance}px)`;
-particle.style.opacity="0";
-},10);
-
-}
-
-setTimeout(()=>firework.remove(),1200);
-
-},i*400);
-  
-}
-}
-  function enableFinalMagic(){
-let screen=document.getElementById("finalMessage");
-
-screen.addEventListener("mousemove", function(e){
+function enableSparkle(){
+document.addEventListener("mousemove", function(e){
 let sparkle=document.createElement("div");
 sparkle.style.position="absolute";
 sparkle.style.left=e.clientX+"px";
 sparkle.style.top=e.clientY+"px";
-sparkle.style.width="5px";
-sparkle.style.height="5px";
+sparkle.style.width="6px";
+sparkle.style.height="6px";
 sparkle.style.background="gold";
 sparkle.style.borderRadius="50%";
 sparkle.style.pointerEvents="none";
-sparkle.style.opacity="1";
 sparkle.style.transition="all 0.8s ease-out";
 document.body.appendChild(sparkle);
 
@@ -562,16 +277,39 @@ sparkle.remove();
 });
 }
 
+function createFireworks(){
+for(let i=0;i<8;i++){
+setTimeout(()=>{
+let firework=document.createElement("div");
+firework.style.position="absolute";
+firework.style.left=Math.random()*100+"%";
+firework.style.top=Math.random()*60+"%";
+document.body.appendChild(firework);
+
+for(let j=0;j<25;j++){
+let particle=document.createElement("div");
+particle.style.position="absolute";
+particle.style.width="6px";
+particle.style.height="6px";
+particle.style.borderRadius="50%";
+particle.style.background=["gold","#ff66cc","#cc99ff","#66ccff","white"][Math.floor(Math.random()*5)];
+particle.style.transition="all 1s ease-out";
+firework.appendChild(particle);
+
+let angle=Math.random()*2*Math.PI;
+let distance=80+Math.random()*60;
+
+setTimeout(()=>{
+particle.style.transform=`translate(${Math.cos(angle)*distance}px, ${Math.sin(angle)*distance}px)`;
+particle.style.opacity="0";
+},10);
+}
+
+setTimeout(()=>firework.remove(),1200);
+},i*400);
+}
+}
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
