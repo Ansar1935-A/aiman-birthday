@@ -195,6 +195,61 @@ from{transform:scale(1);}
 to{transform:scale(1.08);}
 }
 
+#queenText{
+font-size:42px;
+color:gold;
+text-shadow:
+0 0 15px gold,
+0 0 30px #ff00ff,
+0 0 60px white;
+animation:queenPulse 1.5s infinite alternate;
+}
+
+@keyframes queenPulse{
+from{transform:scale(1);}
+to{transform:scale(1.1);}
+}
+
+.confetti{
+position:absolute;
+width:8px;
+height:12px;
+background:gold;
+animation:confettiFall linear forwards;
+}
+
+@keyframes confettiFall{
+0%{transform:translateY(-10vh) rotate(0deg);}
+100%{transform:translateY(110vh) rotate(720deg);}
+}
+
+function royalCelebration(){
+
+transition("finalCelebration");
+
+let music=document.getElementById("birthdayMusic");
+music.volume=1;
+
+for(let i=0;i<150;i++){
+let confetti=document.createElement("div");
+confetti.className="confetti";
+confetti.style.left=Math.random()*100+"%";
+confetti.style.background=["gold","#ff66cc","#cc99ff","#66ccff","white"][Math.floor(Math.random()*5)];
+confetti.style.animationDuration=(3+Math.random()*4)+"s";
+document.body.appendChild(confetti);
+}
+
+let interval=setInterval(()=>{
+createFireworks();
+},1500);
+
+setTimeout(()=>{
+clearInterval(interval);
+},8000);
+
+}
+
+
   
 </style>
 </head>
@@ -249,12 +304,10 @@ to{transform:scale(1.08);}
 </div>
 
 <!-- GOODBYE -->
-<div id="goodbyeScreen" class="screen">
-<h1 class="destinyGlow">Every Queen Writes Her Own Destiny 👑</h1>
-<div id="royalHeart">💖</div>
-<h2>Happy 17th Birthday Princess Aiman ✨</h2>
-<h3 id="signature">— Ansar</h3>
-
+<div id="finalCelebration" class="screen" style="background:radial-gradient(circle,#1a0033,#330066,#000);">
+<h1 id="queenText">👑 LONG LIVE THE QUEEN 👑</h1>
+<h2 style="margin-top:20px;">Happy 17th Birthday Aiman ✨</h2>
+<h3 id="signature" style="margin-top:30px;">— Ansar</h3>
 </div>
 
 <script>
@@ -363,7 +416,7 @@ function cinematicGoodbye(){
    transition("goodbyeScreen");
 
    setTimeout(()=>{
-      transition("finalMessage");
+      royalCelebration();
       enableFinalMagic();
    },7000);
 }
@@ -508,6 +561,7 @@ sparkle.remove();
 
 </body>
 </html>
+
 
 
 
