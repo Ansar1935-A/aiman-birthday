@@ -33,10 +33,10 @@ box-sizing:border-box;
 
 /* Headings */
 h1,h2,h3{
-color:#5a008a;
 text-shadow:0 0 15px #fff,0 0 35px #ff99ff;
 }
 
+/* Button */
 button{
 padding:14px 32px;
 border:none;
@@ -64,22 +64,30 @@ z-index:0;
 100%{transform:translateY(-10vh);}
 }
 
-/* Star game */
-#star{
-font-size:60px;
-cursor:pointer;
-transition:transform 0.2s;
-}
-#star:active{transform:scale(1.4);}
-
-/* Crown */
-#crown{
-font-size:90px;
+/* Floating Photos */
+.photo{
 position:absolute;
-top:-120px;
-animation:drop 2s forwards;
+border-radius:20px;
+box-shadow:0 0 25px gold;
+animation:floatPhoto ease-in-out infinite alternate;
+z-index:1;
+pointer-events:none;
 }
-@keyframes drop{to{top:30%;}}
+@keyframes floatPhoto{
+0%{transform:translateY(0px) rotate(-3deg);}
+100%{transform:translateY(-35px) rotate(3deg);}
+}
+
+/* Balloons */
+.balloon{
+position:absolute;
+font-size:40px;
+animation:balloonUp linear infinite;
+}
+@keyframes balloonUp{
+0%{transform:translateY(100vh);}
+100%{transform:translateY(-10vh);}
+}
 
 /* Quotes */
 .quote{
@@ -90,52 +98,66 @@ transition:opacity 2s;
 max-width:90%;
 }
 
-/* FINAL CELEBRATION */
+/* FINAL CORONATION */
 #finalCelebration{
-background:radial-gradient(circle,#1a0033,#330066,#000);
+background:radial-gradient(circle,#000,#1a0033,#000);
 color:white;
 }
 
 #queenText{
-font-size:42px;
+font-size:50px;
 color:gold;
-text-shadow:
-0 0 15px gold,
-0 0 30px #ff00ff,
-0 0 60px white;
-animation:queenPulse 1.5s infinite alternate;
+text-shadow:0 0 20px gold,0 0 40px #ff00ff,0 0 80px white;
+animation:pulse 1.2s infinite alternate;
 }
 
-@keyframes queenPulse{
+@keyframes pulse{
 from{transform:scale(1);}
-to{transform:scale(1.1);}
+to{transform:scale(1.15);}
 }
 
 #signature{
-font-size:22px;
+font-size:24px;
 color:#ffd700;
-text-shadow:
-0 0 10px gold,
-0 0 25px #ff99ff,
-0 0 40px white;
-animation:signatureGlow 2s infinite alternate;
-}
-
-@keyframes signatureGlow{
-from{transform:scale(1);}
-to{transform:scale(1.08);}
+text-shadow:0 0 10px gold,0 0 25px #ff99ff;
 }
 
 .confetti{
 position:absolute;
 width:8px;
-height:12px;
+height:14px;
 animation:confettiFall linear forwards;
 }
-
 @keyframes confettiFall{
 0%{transform:translateY(-10vh) rotate(0deg);}
 100%{transform:translateY(110vh) rotate(720deg);}
+}
+
+/* Shake */
+@keyframes shake{
+0%{transform:translate(0);}
+20%{transform:translate(-6px,6px);}
+40%{transform:translate(6px,-6px);}
+60%{transform:translate(-6px,6px);}
+80%{transform:translate(6px,-6px);}
+100%{transform:translate(0);}
+}
+
+/* Flash */
+.flash{
+position:fixed;
+width:100%;
+height:100%;
+background:white;
+top:0;
+left:0;
+opacity:0.8;
+pointer-events:none;
+animation:flashFade 0.6s forwards;
+}
+@keyframes flashFade{
+from{opacity:0.8;}
+to{opacity:0;}
 }
 </style>
 </head>
@@ -146,47 +168,35 @@ animation:confettiFall linear forwards;
 <source src="birthday.mp3" type="audio/mpeg">
 </audio>
 
-<!-- START -->
 <div id="start" class="screen" style="display:flex;">
 <h1>👑 Tap To Begin The Royal Fairytale ✨</h1>
 <button onclick="start()">Start</button>
 </div>
 
-<!-- WELCOME -->
 <div id="welcome" class="screen">
 <h1>✨ A Princess Named Aiman Turns 17 👑</h1>
-<button onclick="showGame()">Continue</button>
+<button onclick="showGallery()">Continue</button>
 </div>
 
-<!-- GAME -->
-<div id="game" class="screen">
-<h2>Catch 5 Magical Stars ⭐</h2>
-<div id="star">⭐</div>
-<h3 id="score">0 / 5</h3>
+<div id="gallery" class="screen">
+<h2>💖 Some Sweet Memories 💖</h2>
 </div>
 
-<!-- QUOTES -->
 <div id="quotes" class="screen">
 <div class="quote">You don’t even try to shine… yet you outshine everyone ✨</div>
 <div class="quote">Some people are rare. You are one of them.</div>
 <div class="quote">Your smile carries a kind of magic 💫</div>
 <div class="quote">Strong mind. Soft heart. Golden soul.</div>
-<div class="quote">The world feels brighter when you’re in it 🌸</div>
-<div class="quote">You’re not just growing older… you’re growing stronger.</div>
 <div class="quote">Grace isn’t taught. You naturally have it 👑</div>
-<div class="quote">Keep being you. That’s your superpower.</div>
 </div>
 
-<!-- FINAL -->
 <div id="finalCelebration" class="screen">
 <h1 id="queenText">👑 LONG LIVE THE QUEEN 👑</h1>
-<h2 style="margin-top:20px;">Happy 17th Birthday Aiman ✨</h2>
-<h3 id="signature" style="margin-top:30px;">— Ansar</h3>
+<h2>Happy 17th Birthday Aiman ✨</h2>
+<h3 id="signature">— Ansar</h3>
 </div>
 
 <script>
-let score=0;
-
 function transition(next){
 document.body.style.opacity=0;
 setTimeout(()=>{
@@ -197,18 +207,37 @@ document.body.style.opacity=1;
 }
 
 function start(){
-let music=document.getElementById("birthdayMusic");
-music.play();
+document.getElementById("birthdayMusic").play();
+createGlitter();
 transition("welcome");
 }
 
-function showGame(){transition("game");}
+function showGallery(){
+transition("gallery");
 
-document.getElementById("star").onclick=function(){
-score++;
-document.getElementById("score").innerText=score+" / 5";
-if(score==5){
-setTimeout(()=>showQuotes(),1500);
+let photos=["photo1.jpg","photo2.jpg","photo3.jpg","photo4.jpg","photo5.jpg"];
+photos.forEach((src,i)=>{
+let img=document.createElement("img");
+img.src=src;
+img.className="photo";
+img.style.top=(10+i*15)+"%";
+img.style.left=(10+i*15)+"%";
+img.style.width="130px";
+document.body.appendChild(img);
+});
+
+createBalloons();
+setTimeout(()=>showQuotes(),8000);
+}
+
+function createBalloons(){
+for(let i=0;i<6;i++){
+let b=document.createElement("div");
+b.className="balloon";
+b.innerHTML="🎈";
+b.style.left=(10+i*15)+"%";
+b.style.animationDuration=(5+i)+"s";
+document.body.appendChild(b);
 }
 }
 
@@ -228,85 +257,97 @@ setTimeout(()=>royalCelebration(),4000);
 }
 
 function royalCelebration(){
-
 transition("finalCelebration");
+
+document.body.style.animation="shake 0.5s";
+setTimeout(()=>{document.body.style.animation="";},500);
 
 enableSparkle();
 
-for(let i=0;i<200;i++){
+for(let i=0;i<400;i++){
 let confetti=document.createElement("div");
 confetti.className="confetti";
 confetti.style.left=Math.random()*100+"%";
-confetti.style.background=["gold","#ff66cc","#cc99ff","#66ccff","white"][Math.floor(Math.random()*5)];
-confetti.style.animationDuration=(3+Math.random()*4)+"s";
+confetti.style.background=["gold","#ff66cc","#cc99ff","#66ccff","white","#ffcc00","#ff0066"][Math.floor(Math.random()*7)];
+confetti.style.animationDuration=(2+Math.random()*3)+"s";
 document.body.appendChild(confetti);
 }
 
 let interval=setInterval(()=>{
 createFireworks();
-},1200);
+flashEffect();
+},800);
 
-setTimeout(()=>{
-clearInterval(interval);
-},10000);
-
+setTimeout(()=>clearInterval(interval),15000);
 }
 
 function enableSparkle(){
-document.addEventListener("mousemove", function(e){
-let sparkle=document.createElement("div");
-sparkle.style.position="absolute";
-sparkle.style.left=e.clientX+"px";
-sparkle.style.top=e.clientY+"px";
-sparkle.style.width="6px";
-sparkle.style.height="6px";
-sparkle.style.background="gold";
-sparkle.style.borderRadius="50%";
-sparkle.style.pointerEvents="none";
-sparkle.style.transition="all 0.8s ease-out";
-document.body.appendChild(sparkle);
-
-setTimeout(()=>{
-sparkle.style.transform="scale(3)";
-sparkle.style.opacity="0";
-},10);
-
-setTimeout(()=>{
-sparkle.remove();
-},800);
+document.addEventListener("mousemove",function(e){
+let s=document.createElement("div");
+s.style.position="absolute";
+s.style.left=e.clientX+"px";
+s.style.top=e.clientY+"px";
+s.style.width="6px";
+s.style.height="6px";
+s.style.background="gold";
+s.style.borderRadius="50%";
+s.style.pointerEvents="none";
+s.style.transition="all 0.8s ease-out";
+document.body.appendChild(s);
+setTimeout(()=>{s.style.transform="scale(3)";s.style.opacity="0";},10);
+setTimeout(()=>s.remove(),800);
 });
 }
 
 function createFireworks(){
-for(let i=0;i<8;i++){
+for(let i=0;i<10;i++){
 setTimeout(()=>{
-let firework=document.createElement("div");
-firework.style.position="absolute";
-firework.style.left=Math.random()*100+"%";
-firework.style.top=Math.random()*60+"%";
-document.body.appendChild(firework);
+let f=document.createElement("div");
+f.style.position="absolute";
+f.style.left=Math.random()*100+"%";
+f.style.top=Math.random()*60+"%";
+document.body.appendChild(f);
 
-for(let j=0;j<25;j++){
-let particle=document.createElement("div");
-particle.style.position="absolute";
-particle.style.width="6px";
-particle.style.height="6px";
-particle.style.borderRadius="50%";
-particle.style.background=["gold","#ff66cc","#cc99ff","#66ccff","white"][Math.floor(Math.random()*5)];
-particle.style.transition="all 1s ease-out";
-firework.appendChild(particle);
+for(let j=0;j<35;j++){
+let p=document.createElement("div");
+p.style.position="absolute";
+p.style.width="6px";
+p.style.height="6px";
+p.style.borderRadius="50%";
+p.style.background=["gold","#ff66cc","#cc99ff","#66ccff","white"][Math.floor(Math.random()*5)];
+p.style.transition="all 1s ease-out";
+f.appendChild(p);
 
 let angle=Math.random()*2*Math.PI;
-let distance=80+Math.random()*60;
+let distance=100+Math.random()*80;
 
 setTimeout(()=>{
-particle.style.transform=`translate(${Math.cos(angle)*distance}px, ${Math.sin(angle)*distance}px)`;
-particle.style.opacity="0";
+p.style.transform=`translate(${Math.cos(angle)*distance}px, ${Math.sin(angle)*distance}px)`;
+p.style.opacity="0";
 },10);
 }
 
-setTimeout(()=>firework.remove(),1200);
-},i*400);
+setTimeout(()=>f.remove(),1200);
+},i*300);
+}
+}
+
+function flashEffect(){
+let flash=document.createElement("div");
+flash.className="flash";
+document.body.appendChild(flash);
+setTimeout(()=>flash.remove(),600);
+}
+
+function createGlitter(){
+let colors=["gold","#ff66cc","#cc99ff","#66ccff","white"];
+for(let i=0;i<100;i++){
+let g=document.createElement("div");
+g.className="glitter";
+g.style.background=colors[Math.floor(Math.random()*colors.length)];
+g.style.left=Math.random()*100+"%";
+g.style.animationDuration=(4+Math.random()*6)+"s";
+document.body.appendChild(g);
 }
 }
 </script>
