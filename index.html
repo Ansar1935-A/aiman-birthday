@@ -3,353 +3,299 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Princess Aiman 👑</title>
+<title>Royal Surprise</title>
 
 <style>
+
 body{
 margin:0;
 overflow:hidden;
+background:radial-gradient(circle at center,#1a0033,#000);
 font-family:'Segoe UI',sans-serif;
-background:radial-gradient(circle at top,#ffd6f6,#e6ccff,#ffcce6);
-color:#4a0072;
-transition:opacity 1.2s ease;
+color:white;
+text-align:center;
 }
 
-/* Screens */
 .screen{
 position:absolute;
 width:100%;
 height:100%;
-top:0;
-left:0;
 display:none;
-align-items:center;
 justify-content:center;
+align-items:center;
 flex-direction:column;
-text-align:center;
-padding:20px;
-box-sizing:border-box;
 }
 
-/* Headings */
-h1,h2,h3{
-text-shadow:0 0 15px #fff,0 0 35px #ff99ff;
+.active{
+display:flex;
+animation:fadeIn 1.5s ease forwards;
 }
 
-/* Button */
-button{
-padding:14px 32px;
-border:none;
-border-radius:40px;
-background:linear-gradient(45deg,gold,orange);
-color:white;
-font-size:18px;
-cursor:pointer;
-box-shadow:0 0 20px gold;
+@keyframes fadeIn{
+from{opacity:0;}
+to{opacity:1;}
 }
 
-/* Glitter */
-.glitter{
-position:absolute;
-width:6px;
-height:6px;
-border-radius:50%;
-animation:floatUp linear infinite;
-opacity:0.8;
+/* PALACE BACKGROUND */
+.palace{
+position:fixed;
+bottom:0;
+width:100%;
+height:40%;
+background:linear-gradient(to top,#000,transparent),
+url('https://i.imgur.com/6Iej2c3.png');
+background-size:cover;
+background-position:center;
+opacity:0.3;
 z-index:0;
 }
 
-@keyframes floatUp{
-0%{transform:translateY(100vh);}
-100%{transform:translateY(-10vh);}
-}
-
-/* Floating Photos */
-.photo{
-position:absolute;
+/* FLOATING PHOTOS */
+.floating-photo{
+position:fixed;
+width:160px;
 border-radius:20px;
 box-shadow:0 0 25px gold;
-animation:floatPhoto ease-in-out infinite alternate;
-z-index:1;
-pointer-events:none;
+animation:floatPhoto 6s ease-in-out infinite;
+z-index:2;
 }
+
 @keyframes floatPhoto{
-0%{transform:translateY(0px) rotate(-3deg);}
-100%{transform:translateY(-35px) rotate(3deg);}
+0%,100%{transform:translateY(0px);}
+50%{transform:translateY(-25px);}
 }
 
-/* Balloons */
+/* BALLOONS */
 .balloon{
-position:absolute;
-font-size:40px;
-animation:balloonUp linear infinite;
-}
-@keyframes balloonUp{
-0%{transform:translateY(100vh);}
-100%{transform:translateY(-10vh);}
-}
-
-/* Quotes */
-.quote{
-opacity:0;
-font-size:20px;
-margin-top:20px;
-transition:opacity 2s;
-max-width:90%;
-}
-
-/* FINAL CORONATION */
-#finalCelebration{
-background:radial-gradient(circle,#000,#1a0033,#000);
-color:white;
-}
-
-#queenText{
-font-size:50px;
-color:gold;
-text-shadow:0 0 20px gold,0 0 40px #ff00ff,0 0 80px white;
-animation:pulse 1.2s infinite alternate;
-}
-
-@keyframes pulse{
-from{transform:scale(1);}
-to{transform:scale(1.15);}
-}
-
-#signature{
-font-size:24px;
-color:#ffd700;
-text-shadow:0 0 10px gold,0 0 25px #ff99ff;
-}
-
-.confetti{
-position:absolute;
-width:8px;
-height:14px;
-animation:confettiFall linear forwards;
-}
-@keyframes confettiFall{
-0%{transform:translateY(-10vh) rotate(0deg);}
-100%{transform:translateY(110vh) rotate(720deg);}
-}
-
-/* Shake */
-@keyframes shake{
-0%{transform:translate(0);}
-20%{transform:translate(-6px,6px);}
-40%{transform:translate(6px,-6px);}
-60%{transform:translate(-6px,6px);}
-80%{transform:translate(6px,-6px);}
-100%{transform:translate(0);}
-}
-
-/* Flash */
-.flash{
 position:fixed;
-width:100%;
-height:100%;
-background:white;
-top:0;
-left:0;
-opacity:0.8;
-pointer-events:none;
-animation:flashFade 0.6s forwards;
+bottom:-100px;
+width:40px;
+height:60px;
+background:radial-gradient(circle at 30% 30%, #ff66cc, #cc00ff);
+border-radius:50%;
+animation:rise linear infinite;
+z-index:1;
 }
-@keyframes flashFade{
-from{opacity:0.8;}
-to{opacity:0;}
+
+@keyframes rise{
+0%{transform:translateY(0);}
+100%{transform:translateY(-120vh);}
 }
+
+/* CONFETTI */
+.confetti{
+position:fixed;
+width:8px;
+height:8px;
+border-radius:50%;
+animation:fall 3s linear forwards;
+}
+
+@keyframes fall{
+to{transform:translateY(100vh);opacity:0;}
+}
+
+/* CORONATION TEXT */
+.coronation-text{
+font-size:45px;
+color:gold;
+text-shadow:0 0 20px gold,0 0 40px orange;
+animation:glowPulse 2s infinite;
+}
+
+@keyframes glowPulse{
+0%,100%{text-shadow:0 0 20px gold;}
+50%{text-shadow:0 0 50px orange,0 0 100px gold;}
+}
+
+/* CROWN DROP */
+.crown{
+position:absolute;
+top:-100px;
+font-size:60px;
+animation:drop 2s forwards;
+}
+
+@keyframes drop{
+to{top:20px;}
+}
+
+/* BUTTON */
+button{
+padding:12px 25px;
+border:none;
+border-radius:25px;
+background:gold;
+color:black;
+font-weight:bold;
+cursor:pointer;
+}
+
 </style>
 </head>
 
 <body>
 
-<audio id="birthdayMusic" loop>
-<source src="birthday.mp3" type="audio/mpeg">
-</audio>
+<div class="palace"></div>
 
-<div id="start" class="screen" style="display:flex;">
-<h1>👑 Tap To Begin The Royal Fairytale ✨</h1>
-<button onclick="start()">Start</button>
+<!-- START SCREEN -->
+<div id="startScreen" class="screen active">
+<h1>Tap To Start The Magic ✨</h1>
+<button onclick="startExperience()">Start</button>
 </div>
 
-<div id="welcome" class="screen">
-<h1>✨ A Princess Named Aiman Turns 17 👑</h1>
-<button onclick="showGallery()">Continue</button>
+<!-- QUOTES -->
+<div id="quoteScreen" class="screen">
+<h1 id="quoteText"></h1>
 </div>
 
-<div id="gallery" class="screen">
-<h2>💖 Some Sweet Memories 💖</h2>
+<!-- GAME -->
+<div id="gameScreen" class="screen">
+<h1>Catch 10 Hearts ❤️</h1>
+<p>Tap them fast!</p>
+<div id="score">0</div>
 </div>
 
-<div id="quotes" class="screen">
-<div class="quote">You don’t even try to shine… yet you outshine everyone ✨</div>
-<div class="quote">Some people are rare. You are one of them.</div>
-<div class="quote">Your smile carries a kind of magic 💫</div>
-<div class="quote">Strong mind. Soft heart. Golden soul.</div>
-<div class="quote">Grace isn’t taught. You naturally have it 👑</div>
+<!-- WISH -->
+<div id="wishScreen" class="screen">
+<h1>Close Your Eyes… ✨</h1>
+<h2>Make A Wish 💫</h2>
+<button onclick="blowCandle()">Blow Candle 🕯</button>
 </div>
 
-<div id="finalCelebration" class="screen">
-<h1 id="queenText">👑 LONG LIVE THE QUEEN 👑</h1>
-<h2>Happy 17th Birthday Aiman ✨</h2>
-<h3 id="signature">— Ansar</h3>
+<!-- FINAL -->
+<div id="finalScreen" class="screen">
+<div class="crown">👑</div>
+<h1 class="coronation-text">Queen Of My Heart</h1>
+<h2>Forever & Always 💖</h2>
 </div>
+
+<audio id="bgMusic" src="perfect.mp3"></audio>
 
 <script>
-function transition(next){
-document.body.style.opacity=0;
-setTimeout(()=>{
-document.querySelectorAll(".screen").forEach(s=>s.style.display="none");
-document.getElementById(next).style.display="flex";
-document.body.style.opacity=1;
-},700);
-}
 
-function start(){
-document.getElementById("birthdayMusic").play();
-createGlitter();
-transition("welcome");
-}
+const quotes=[
+"You are my destiny ❤️",
+"You are my happiest moment ✨",
+"You are my dream come true 💫",
+"My forever person 💖",
+"My Queen 👑"
+];
 
-function showGallery(){
-transition("gallery");
+let quoteIndex=0;
 
-let photos=["photo1.jpg","photo2.jpg","photo3.jpg","photo4.jpg","photo5.jpg"];
-photos.forEach((src,i)=>{
-let img=document.createElement("img");
-img.src=src;
-img.className="photo";
-img.style.top=(10+i*15)+"%";
-img.style.left=(10+i*15)+"%";
-img.style.width="130px";
-document.body.appendChild(img);
-});
-
+function startExperience(){
+document.getElementById("bgMusic").play();
+createFloatingPhotos();
 createBalloons();
-setTimeout(()=>showQuotes(),8000);
+showScreen("quoteScreen");
+showQuotes();
 }
 
-function createBalloons(){
-for(let i=0;i<6;i++){
-let b=document.createElement("div");
-b.className="balloon";
-b.innerHTML="🎈";
-b.style.left=(10+i*15)+"%";
-b.style.animationDuration=(5+i)+"s";
-document.body.appendChild(b);
-}
+function showScreen(id){
+document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+document.getElementById(id).classList.add("active");
 }
 
 function showQuotes(){
-transition("quotes");
-let quotes=document.querySelectorAll(".quote");
-let i=0;
-let interval=setInterval(()=>{
-if(i<quotes.length){
-quotes[i].style.opacity=1;
-i++;
+if(quoteIndex<quotes.length){
+document.getElementById("quoteText").innerText=quotes[quoteIndex];
+quoteIndex++;
+setTimeout(showQuotes,3000);
 }else{
-clearInterval(interval);
-setTimeout(()=>royalCelebration(),4000);
+startGame();
 }
-},2000);
 }
 
+/* GAME */
+let score=0;
+
+function startGame(){
+showScreen("gameScreen");
+spawnHeart();
+}
+
+function spawnHeart(){
+let heart=document.createElement("div");
+heart.innerHTML="❤️";
+heart.style.position="fixed";
+heart.style.left=Math.random()*90+"%";
+heart.style.top=Math.random()*90+"%";
+heart.style.fontSize="30px";
+heart.style.cursor="pointer";
+
+heart.onclick=function(){
+score++;
+document.getElementById("score").innerText=score;
+heart.remove();
+if(score>=10){
+showWish();
+}else{
+spawnHeart();
+}
+};
+
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),2000);
+}
+
+function showWish(){
+showScreen("wishScreen");
+}
+
+function blowCandle(){
+royalCelebration();
+}
+
+/* FINAL */
 function royalCelebration(){
-transition("finalCelebration");
+showScreen("finalScreen");
+bollywoodFireworks();
+}
 
-document.body.style.animation="shake 0.5s";
-setTimeout(()=>{document.body.style.animation="";},500);
-
-enableSparkle();
-
+function bollywoodFireworks(){
 for(let i=0;i<400;i++){
 let confetti=document.createElement("div");
 confetti.className="confetti";
 confetti.style.left=Math.random()*100+"%";
-confetti.style.background=["gold","#ff66cc","#cc99ff","#66ccff","white","#ffcc00","#ff0066"][Math.floor(Math.random()*7)];
-confetti.style.animationDuration=(2+Math.random()*3)+"s";
+confetti.style.background=["gold","#ffcc00","#ff0066","#66ccff","#ffffff"][Math.floor(Math.random()*5)];
 document.body.appendChild(confetti);
 }
-
-let interval=setInterval(()=>{
-createFireworks();
-flashEffect();
-},800);
-
-setTimeout(()=>clearInterval(interval),15000);
 }
 
-function enableSparkle(){
-document.addEventListener("mousemove",function(e){
-let s=document.createElement("div");
-s.style.position="absolute";
-s.style.left=e.clientX+"px";
-s.style.top=e.clientY+"px";
-s.style.width="6px";
-s.style.height="6px";
-s.style.background="gold";
-s.style.borderRadius="50%";
-s.style.pointerEvents="none";
-s.style.transition="all 0.8s ease-out";
-document.body.appendChild(s);
-setTimeout(()=>{s.style.transform="scale(3)";s.style.opacity="0";},10);
-setTimeout(()=>s.remove(),800);
+/* PHOTOS */
+function createFloatingPhotos(){
+const photos=["photo1.jpg","photo2.jpg","photo3.jpg","photo4.jpg","photo5.jpg"];
+const positions=[
+{top:"10%",left:"5%"},
+{top:"20%",right:"5%"},
+{top:"65%",left:"8%"},
+{top:"70%",right:"8%"},
+{top:"40%",left:"3%"}
+];
+
+photos.forEach((src,i)=>{
+let img=document.createElement("img");
+img.src=src;
+img.className="floating-photo";
+img.style.top=positions[i].top;
+if(positions[i].left) img.style.left=positions[i].left;
+if(positions[i].right) img.style.right=positions[i].right;
+document.body.appendChild(img);
 });
 }
 
-function createFireworks(){
-for(let i=0;i<10;i++){
-setTimeout(()=>{
-let f=document.createElement("div");
-f.style.position="absolute";
-f.style.left=Math.random()*100+"%";
-f.style.top=Math.random()*60+"%";
-document.body.appendChild(f);
-
-for(let j=0;j<35;j++){
-let p=document.createElement("div");
-p.style.position="absolute";
-p.style.width="6px";
-p.style.height="6px";
-p.style.borderRadius="50%";
-p.style.background=["gold","#ff66cc","#cc99ff","#66ccff","white"][Math.floor(Math.random()*5)];
-p.style.transition="all 1s ease-out";
-f.appendChild(p);
-
-let angle=Math.random()*2*Math.PI;
-let distance=100+Math.random()*80;
-
-setTimeout(()=>{
-p.style.transform=`translate(${Math.cos(angle)*distance}px, ${Math.sin(angle)*distance}px)`;
-p.style.opacity="0";
-},10);
-}
-
-setTimeout(()=>f.remove(),1200);
-},i*300);
+/* BALLOONS */
+function createBalloons(){
+for(let i=0;i<50;i++){
+let balloon=document.createElement("div");
+balloon.className="balloon";
+balloon.style.left=Math.random()*100+"%";
+balloon.style.animationDuration=(6+Math.random()*6)+"s";
+document.body.appendChild(balloon);
 }
 }
 
-function flashEffect(){
-let flash=document.createElement("div");
-flash.className="flash";
-document.body.appendChild(flash);
-setTimeout(()=>flash.remove(),600);
-}
-
-function createGlitter(){
-let colors=["gold","#ff66cc","#cc99ff","#66ccff","white"];
-for(let i=0;i<100;i++){
-let g=document.createElement("div");
-g.className="glitter";
-g.style.background=colors[Math.floor(Math.random()*colors.length)];
-g.style.left=Math.random()*100+"%";
-g.style.animationDuration=(4+Math.random()*6)+"s";
-document.body.appendChild(g);
-}
-}
 </script>
 
 </body>
