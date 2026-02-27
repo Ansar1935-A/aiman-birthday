@@ -10,54 +10,18 @@ body{
 margin:0;
 overflow:hidden;
 font-family:'Segoe UI',sans-serif;
-background:
-radial-gradient(circle at top,#4b0082 0%,#2b004f 40%,#140022 75%,#000000 100%);
-color:#f3d9ff;
-transition:opacity 1.5s ease-in-out;
-}
-
-/* ROYAL FRAME */
-body::after{
-content:"";
-position:fixed;
-top:10px; left:10px; right:10px; bottom:10px;
-border:3px solid gold;
-box-shadow:0 0 25px gold,0 0 60px rgba(255,215,0,0.5);
-pointer-events:none;
-border-radius:15px;
-z-index:9999;
-}
-
-/* STARS */
-.stars{
-position:fixed;
-top:0; left:0;
-width:100%; height:100%;
-background:url('https://www.transparenttextures.com/patterns/stardust.png');
-animation:moveStars 60s linear infinite;
-opacity:0.35;
-z-index:-3;
-}
-@keyframes moveStars{
-from{background-position:0 0;}
-to{background-position:1000px 1000px;}
-}
-
-/* MIST */
-.mist{
-position:fixed;
-bottom:0; left:0;
-width:100%; height:100%;
-background:radial-gradient(circle at bottom,rgba(255,105,180,0.15),transparent 70%);
-z-index:-2;
-pointer-events:none;
+background:radial-gradient(circle at top,#ffd6f6,#e6ccff,#ffcce6);
+color:#4a0072;
+transition:opacity 1.2s ease;
 }
 
 /* SCREENS */
 .screen{
 position:absolute;
-width:100%; height:100%;
-top:0; left:0;
+width:100%;
+height:100%;
+top:0;
+left:0;
 display:none;
 align-items:center;
 justify-content:center;
@@ -68,11 +32,8 @@ box-sizing:border-box;
 }
 
 h1,h2,h3{
-color:#f8d6ff;
-text-shadow:
-0 0 10px rgba(255,255,255,0.8),
-0 0 25px rgba(255,105,180,0.6),
-0 0 40px rgba(204,153,255,0.5);
+color:#5a008a;
+text-shadow:0 0 15px #fff,0 0 35px #ff99ff;
 }
 
 button{
@@ -86,7 +47,7 @@ cursor:pointer;
 box-shadow:0 0 20px gold;
 }
 
-/* FLOATING HEARTS */
+/* 💖 FLOATING HEARTS (ADDED) */
 .love{
 position:fixed;
 font-size:22px;
@@ -95,6 +56,7 @@ opacity:0.7;
 pointer-events:none;
 z-index:2;
 }
+
 @keyframes floatLove{
 0%{transform:translateY(100vh) scale(0.8); opacity:0;}
 20%{opacity:0.9;}
@@ -104,12 +66,14 @@ z-index:2;
 /* GLITTER */
 .glitter{
 position:absolute;
-width:6px; height:6px;
+width:6px;
+height:6px;
 border-radius:50%;
 animation:floatUp linear infinite;
 opacity:0.8;
 z-index:0;
 }
+
 @keyframes floatUp{
 0%{transform:translateY(100vh);}
 100%{transform:translateY(-10vh);}
@@ -123,9 +87,66 @@ animation:popFloat linear infinite;
 opacity:0.9;
 z-index:0;
 }
+
 @keyframes popFloat{
 0%{transform:translateY(100vh) rotate(0deg);}
 100%{transform:translateY(-10vh) rotate(360deg);}
+}
+
+/* STAR GAME */
+#star{
+font-size:60px;
+cursor:pointer;
+transition:transform 0.2s;
+}
+#star:active{transform:scale(1.4);}
+
+/* CROWN */
+#crown{
+font-size:90px;
+position:absolute;
+top:-120px;
+animation:drop 2s forwards;
+}
+@keyframes drop{to{top:30%;}}
+
+/* PHOTOS */
+.photo{
+position:absolute;
+border-radius:20px;
+box-shadow:0 0 25px gold;
+animation:floatPhoto ease-in-out infinite alternate;
+z-index:1;
+pointer-events:none;
+}
+
+@keyframes floatPhoto{
+0%{transform:translateY(0px) rotate(-3deg);}
+100%{transform:translateY(-35px) rotate(3deg);}
+}
+
+/* BALLOONS */
+.balloon{
+position:absolute;
+font-size:40px;
+animation:balloonUp linear infinite;
+z-index:0;
+}
+@keyframes balloonUp{
+0%{transform:translateY(100vh);}
+100%{transform:translateY(-10vh);}
+}
+
+/* CAKE */
+#cake{
+font-size:90px;
+cursor:pointer;
+animation:pulse 1.5s infinite;
+}
+@keyframes pulse{
+0%{transform:scale(1);}
+50%{transform:scale(1.2);}
+100%{transform:scale(1);}
 }
 
 /* QUOTES */
@@ -139,7 +160,7 @@ max-width:90%;
 
 /* GOODBYE */
 #goodbyeScreen{
-background:radial-gradient(circle,#2b004f,#000);
+background:radial-gradient(circle,#2b004f,#4b0082,#000);
 color:white;
 }
 
@@ -151,42 +172,58 @@ animation:grow 3s infinite alternate;
 from{transform:scale(1);}
 to{transform:scale(1.4);}
 }
-
 </style>
 </head>
 
 <body>
-<div class="stars"></div>
-<div class="mist"></div>
 
 <audio id="birthdayMusic" loop>
 <source src="birthday.mp3" type="audio/mpeg">
 </audio>
 
+<!-- START -->
 <div id="start" class="screen" style="display:flex;">
 <h1>👑 Tap To Begin The Royal Fairytale ✨</h1>
 <button onclick="start()">Start</button>
 </div>
 
+<!-- WELCOME -->
 <div id="welcome" class="screen">
 <h1>✨ A Princess Named Aiman Turns 17 👑</h1>
 <button onclick="showGame()">Continue</button>
 </div>
 
+<!-- GAME -->
 <div id="game" class="screen">
 <h2>Catch 5 Magical Stars ⭐</h2>
 <div id="star">⭐⭐⭐⭐⭐</div>
 <h3 id="score">0 / 5</h3>
 </div>
 
+<!-- GALLERY -->
+<div id="gallery" class="screen">
+<h2>💖 Some Sweet Memories 💖</h2>
+</div>
+
+<!-- CAKE -->
+<div id="cakeScreen" class="screen">
+<h2>🎂 Make A Royal Wish 👑</h2>
+<div id="cake" onclick="cutCake()">🎂</div>
+</div>
+
+<!-- QUOTES -->
 <div id="quotes" class="screen">
 <div class="quote">You don’t even try to shine… yet you outshine everyone ✨</div>
 <div class="quote">Some people are rare. You are one of them.</div>
 <div class="quote">Your smile carries a kind of magic 💫</div>
 <div class="quote">Strong mind. Soft heart. Golden soul.</div>
 <div class="quote">The world feels brighter when you’re in it 🌸</div>
+<div class="quote">You’re not just growing older… you’re growing stronger.</div>
+<div class="quote">Grace isn’t taught. You naturally have it 👑</div>
+<div class="quote">Keep being you. That’s your superpower.</div>
 </div>
 
+<!-- GOODBYE -->
 <div id="goodbyeScreen" class="screen">
 <h1>Every Queen Writes Her Own Destiny 👑</h1>
 <div id="royalHeart">💖</div>
@@ -217,6 +254,7 @@ music.volume+=0.03;
 },200);
 });
 createGlitter();
+createPartyPoppers();
 transition("welcome");
 }
 
@@ -226,11 +264,15 @@ document.getElementById("star").onclick=function(){
 score++;
 document.getElementById("score").innerText=score+" / 5";
 if(score==5){
-setTimeout(()=>transition("quotes"),1500);
+let crown=document.createElement("div");
+crown.id="crown";
+crown.innerHTML="👑";
+document.body.appendChild(crown);
+setTimeout(()=>showGallery(),2000);
 }
 }
 
-/* HEARTS */
+/* 💖 HEARTS START IN GOODBYE */
 function startHearts(){
 setInterval(()=>{
 let heart=document.createElement("div");
@@ -243,26 +285,10 @@ setTimeout(()=>heart.remove(),9000);
 },900);
 }
 
-function showQuotes(){
-transition("quotes");
-}
-
 function cinematicGoodbye(){
-startHearts();
+createPartyPoppers();
+startHearts();   // ADDED
 transition("goodbyeScreen");
-}
-
-setTimeout(()=>cinematicGoodbye(),25000);
-
-function createGlitter(){
-for(let i=0;i<80;i++){
-let g=document.createElement("div");
-g.className="glitter";
-g.style.background=["gold","#ff66cc","#cc99ff","white"][Math.floor(Math.random()*4)];
-g.style.left=Math.random()*100+"%";
-g.style.animationDuration=(4+Math.random()*6)+"s";
-document.body.appendChild(g);
-}
 }
 </script>
 
