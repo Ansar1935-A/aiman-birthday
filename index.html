@@ -300,10 +300,24 @@ g.style.animationDuration=(4+Math.random()*6)+"s";
 document.body.appendChild(g);
 }
 }
+function createPartyPoppers(){
+for(let i=0;i<25;i++){
+let pop=document.createElement("div");
+pop.className="popper";
+pop.innerHTML=["🎉","🎊","✨","💥"][Math.floor(Math.random()*4)];
+pop.style.left=Math.random()*100+"vw";
+pop.style.animationDuration=(4+Math.random()*4)+"s";
+document.body.appendChild(pop);
 
+setTimeout(()=>{pop.remove();},8000);
+}
+}
+
+  
   
 </script>
 
 </body>
 </html>
+
 
