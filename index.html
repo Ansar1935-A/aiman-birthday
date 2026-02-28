@@ -289,7 +289,21 @@ createPartyPoppers();
 startHearts();
 transition("goodbyeScreen");
 }
+
+function createGlitter(){
+for(let i=0;i<80;i++){
+let g=document.createElement("div");
+g.className="glitter";
+g.style.background=["gold","#ff66cc","#cc99ff","white"][Math.floor(Math.random()*4)];
+g.style.left=Math.random()*100+"%";
+g.style.animationDuration=(4+Math.random()*6)+"s";
+document.body.appendChild(g);
+}
+}
+
+  
 </script>
 
 </body>
 </html>
+
